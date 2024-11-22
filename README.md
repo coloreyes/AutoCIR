@@ -28,11 +28,11 @@ Here we take the sample of ICIP dataset as an example to demonstrate the usage.
 |   |   ├── FASHIONIQ
 |   |   ├── circo
 |   |   ├── CIRR
-|       
+|   |    
 │   ├── model
-|
+|   | 
 |   ├── result
-|   
+|   |
 |   ├── src
 
 ### Required Datasets
