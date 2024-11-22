@@ -34,7 +34,7 @@ Here we take the sample of ICIP dataset as an example to demonstrate the usage.
 |   ├── result
 |   |
 |   ├── src
-
+```
 ### Required Datasets
 
 #### FashionIQ
