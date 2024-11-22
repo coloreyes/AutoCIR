@@ -124,7 +124,7 @@ class CheckModel(Enum):
         '''
         final_result = ''
         # url = 'https://api.openai.com/v1/chat/completions'
-        url = 'https://forward.ronpay.org/v1/chat/completions'
+        url = 'https:///v1/chat/completions'
         headers = {
             'Content-Type': 'application/json; charset=utf-8',
             'Authorization': f'Bearer {openai_key}'

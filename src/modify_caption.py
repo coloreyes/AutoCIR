@@ -4,7 +4,6 @@ import openai
 import json
 import time
 import requests
-Qwen2_7B_model_file = '/home/uestc_zhou/myh/model/qwen/Qwen2-7B-Instruct'
 
 class modify_factory:
     def __init__(self,model_name,device:torch.device) -> None:
@@ -53,7 +52,6 @@ class modify_factory:
     def chat_gpt_4o_mini(self, prompt: str, openai_key: str, max_length=800) -> str:
         final_result = ''
         # url = 'https://api.openai.com/v1/chat/completions'
-        url = 'https://forward.ronpay.org/v1/chat/completions'
         headers = {
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {openai_key}'
