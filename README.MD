@@ -29,7 +29,7 @@ AutoCIR/
 │   ├── circo/
 │   └── CIRR/
 ├── model/
-├── result/
+├── config/
 └── src/
 ```
 ### Required Datasets
