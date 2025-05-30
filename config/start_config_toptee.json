@@ -1,0 +1,69 @@
+[
+    {
+        "exp-name": "Experiment to evaluate",
+        "device": 1,
+        "preload": [
+            "captions",
+            "mods"
+        ],
+        "clip": "ViT-B-32",
+        "clip_choices": [
+            "ViT-Base/32",
+            "ViT-B/32",
+            "ViT-B/16",
+            "ViT-L/14",
+            "ViT-bigG-14",
+            "ViT-B-32",
+            "ViT-B-16",
+            "ViT-L-14",
+            "ViT-H-14",
+            "ViT-g-14"
+        ],
+        "blip": "coca",
+        "blip_choices": [
+            "blip_image_captioning_base",
+            "blip2_opt_2_7B",
+            "blip2_opt_6_7B",
+            "qwen_vl_7B",
+            "coca",
+            "llava_ov"
+        ],
+        "dataset": "fashioniq_toptee",
+        "dataset_choices": [
+            "cirr",
+            "circo",
+            "fashioniq_dress",
+            "fashioniq_toptee",
+            "fashioniq_shirt"
+        ],
+        "split": "val",
+        "split_choices": [
+            "val",
+            "test"
+        ],
+        "dataset_path": "../datasets/FASHIONIQ",
+        "llm_prompt": "prompts.structural_modifier_prompt_fashion",
+        "blip_prompt": "prompts.blip_prompt",
+        "openai_key": "",
+        "max_check_num": 1,
+        "LLM_model_name": "gpt-4o-mini",
+        "LLM_model_name_choices": [
+            "gpt-4o",
+            "gpt-4o-mini",
+            "gpt-3.5-turbo",
+            "qwen-turbo"
+        ],
+        "Check_LLM_model_name": "gpt-4o-mini",
+        "Check_LLM_model_name_choices": [
+            "gpt-4o",
+            "gpt-4o-mini",
+            "gpt-3.5-turbo",
+            "qwen-turbo"
+        ],
+        "retrieval": "default",
+        "preload_modified_captions_file": "",
+        "preload_image_captions_file": "",
+        "preload_suggestions": "",
+        "task": ""
+    }
+]
