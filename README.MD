@@ -111,19 +111,18 @@ CIRCO/
         └── ...
 ```
 
-```
 ### Preprocess
 
-Step 1: generate image captions:
-Use src/generate_captions.py to generate the dataset. 
-    
-```shell
-python src/generate_captions.py --image_path datasets/FASHIONIQ/images/ --captioner blip2-opt-6.7B 
+**Step 1: Generate image captions**  
+Use `src/generate_captions.py` to generate captions for the dataset:
+
+```bash
+python src/generate_captions.py --dataset_name FASHIONIQ --captioner blip2
 ```
 
-Step 2: disassemble the dataset:
+**Step 2: disassemble the dataset:**
 Using `src/main.py` with preprocessed captions for image-text retrieval
 
-```shell
+```bash
 python src/main.py  --dataset fashioniq_dress --split val --dataset-path $datapath --preload captions mods --llm_prompt prompts.structural_modifier_prompt_fashion --clip ViT-B-32 --max_correct_num 1
 ```
