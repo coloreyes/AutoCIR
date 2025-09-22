@@ -1,15 +1,21 @@
 from enum import Enum, auto
 import torch
 import open_clip
-from transformers import CLIPProcessor, CLIPModel
-from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import (
+    BlipProcessor, 
+    BlipForConditionalGeneration,
+    Qwen2VLProcessor,
+    Qwen2VLForConditionalGeneration,
+    LlavaNextProcessor,
+    LlavaNextForConditionalGeneration,)
 from transformers import Blip2Processor, Blip2ForConditionalGeneration
 from torchvision import transforms
+import open_clip
 class Captioner(Enum):
     blip_image_captioning_base = auto()
     blip2_opt_2_7B = auto()
     blip2_opt_6_7B = auto()
-    qwen_vl_7B = auto()
+    qwen2_vl_7B = auto()
     coca = auto()
     llava_ov = auto()
 
@@ -21,50 +27,34 @@ class Captioner(Enum):
             raise ValueError()
         
     def load_model_and_preprocess(self, device: torch.device):
-        config = CAPTIONER_REGISTRY.get(self)
-        if config is None:
-            raise ValueError(f"No configuration found for captioner: {self.name}")
+        if self is Captioner.blip2_opt_2_7B:
+            processor = Blip2Processor.from_pretrained("../model/blip/blip2-opt-2.7b")
+            model = Blip2ForConditionalGeneration.from_pretrained("../model/blip/blip2-opt-2.7b", device_map=device)
 
-        model_path = config["model_path"]
-        processor_cls = config["processor"]
-        model_cls = config["model"]
+        if self is Captioner.blip_image_captioning_base:
+            processor = Blip2Processor.from_pretrained("../model/blip/blip-image-captioning-base")
+            model = Blip2ForConditionalGeneration.from_pretrained("../model/blip/blip-image-captioning-base", device_map=device)
 
-        processor = processor_cls.from_pretrained(model_path)
-        model = model_cls.from_pretrained(model_path).to(device)
-        return model, processor
+        if self is Captioner.blip2_opt_6_7B:
+            processor = Blip2Processor.from_pretrained("../model/blip/blip2-opt-6.7b")
+            model = Blip2ForConditionalGeneration.from_pretrained("../model/blip/blip2-opt-6.7b", device_map=device)
 
-CAPTIONER_REGISTRY = {
-    Captioner.blip_image_captioning_base: {
-        "model_path": "../model/blip/blip-image-captioning-base",
-        "processor": BlipProcessor,
-        "model": BlipForConditionalGeneration,
-    },
-    Captioner.blip2_opt_2_7B: {
-        "model_path": "../model/blip/blip2-opt-2.7b",
-        "processor": Blip2Processor,
-        "model": Blip2ForConditionalGeneration,
-    },
-    Captioner.blip2_opt_6_7B: {
-        "model_path": "../model/blip/blip2-opt-6.7b",
-        "processor": Blip2Processor,
-        "model": Blip2ForConditionalGeneration,
-    },
-    Captioner.qwen_vl_7B: {
-        "model_path": "../model/qwen/qwen-vl-7b",
-        "processor": QwenVLProcessor, 
-        "model": QwenVLForConditionalGeneration,
-    },
-    Captioner.coca: {
-        "model_path": "../model/coca/coca-vit-b-32",
-        "processor": CocaProcessor,
-        "model": CocaForConditionalGeneration,
-    },
-    Captioner.llava_ov: {
-        "model_path": "../model/llava/llava-7b",
-        "processor": LlavaProcessor,
-        "model": LlavaForConditionalGeneration,
-    },
-}
+        elif self is Captioner.qwen2_vl_7B:
+            processor = Qwen2VLProcessor.from_pretrained("../model/Qwen/Qwen2-VL-7B-Instruct")
+            model = Qwen2VLForConditionalGeneration.from_pretrained("../model/Qwen/Qwen2-VL-7B-Instruct", device_map=device)
+
+        elif self is Captioner.llava_ov:
+            processor = LlavaNextProcessor.from_pretrained("../model/llava-hf/llava-onevision-qwen2-7b-ov-hf")
+            model = LlavaNextForConditionalGeneration.from_pretrained("../model/llava-hf/llava-onevision-qwen2-7b-ov-hf", device_map=device)
+
+        elif self is Captioner.coca:
+            model, _, processor = open_clip.create_model_and_transforms(
+                "coca_ViT-L-14", pretrained="laion2B-s13B-b90k"
+            )
+        else:
+            raise ValueError(f"Unsupported Captioner type.")
+
+        return processor, model
 
 def _convert_image_to_rgb(image):
     return image.convert("RGB")

@@ -24,7 +24,7 @@
             "blip_image_captioning_base",
             "blip2_opt_2_7B",
             "blip2_opt_6_7B",
-            "qwen_vl_7B",
+            "qwen2_vl_7B",
             "coca",
             "llava_ov"
         ],
